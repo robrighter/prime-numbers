@@ -1,7 +1,12 @@
+var primecache = [2,3,5];
+
 function isPrime(x, primes){
-	if(!primes){ primes = [2,3,5]; }
+	if(!primes){ primes = primecache; }
+	if(determineIfPrimeFromList(x, primes)){
+		return true;
+	}
 	if(isCacheLongEnoughForAnswer(x, primes)){
-		return determineIfPrimeFromList(x, primes);
+		return false;
 	}
 	else{
 		return isPrime(x, incrementPrimeListFor(x, primes));
@@ -16,6 +21,9 @@ function incrementPrimeListFor(x, primes){
 	while(!isCacheLongEnoughForAnswer(x, primes)){
 		if(determineIfPrimeFromList(i,primes)){
 			primes.push(i);
+			if((x%i)===0){
+				return primes;
+			}
 		}
 		i++;
 	}
@@ -59,5 +67,5 @@ function tests(){
 }
 
 tests();
-//console.log(isPrime(163));
+//console.log(isPrime(163982372679));
 module.exports = { isPrime: isPrime };
